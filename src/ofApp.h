@@ -2,6 +2,7 @@
 
 #include "BLayer.h"
 #include "ofMain.h"
+#include "ofxGui.h"
 
 #define MAXLAYERS 20
 
@@ -10,7 +11,7 @@ class ofApp : public ofBaseApp{
 		void setup();
 		void update();
 		void draw();
-		
+
 		void keyPressed(int key);
 		void keyReleased(int key);
 		void mouseMoved(int x, int y);
@@ -23,9 +24,28 @@ class ofApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
 
-		string layerPath = "b0"; // this should be dynamic for each bicho
+	// this should come from ofDirectory
+	string layerPath = "bichos/b0";
 
-		int layersTotal;
+	ofFbo fbo;
 
-		BLayer myLayer[MAXLAYERS];
+	int layersTotal;
+	float areaX[2];
+
+	int safezone = 250;
+
+	float bX;
+	float bY;
+
+	bool debX;
+	bool debGui;
+
+	ofxPanel gui;
+  ofParameter<float> positionX;
+  ofParameter<float> positionY;
+	ofParameter<float> bOffset;
+	ofParameter<float> bSpeed;
+
+	BLayer myLayer[MAXLAYERS];
+
 };

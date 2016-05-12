@@ -6,22 +6,14 @@ BLayer::BLayer() {
 
 void BLayer::setup(string _path) {
 	Layer.load(_path);
+	Layer.resize(ofGetHeight()/4,ofGetHeight()/4);
 }
 
-void BLayer::update(float _x, float _y) {
+void BLayer::update() {
 
-	//float wave = sin(ofGetElapsedTimef()) * 1;
-
-	speedX = ofRandom(-1,1);
-	speedY = ofRandom(-1,1);
-
-	x = _x + speedX;
-	y = _y + speedY;
 
 }
 
 void BLayer::draw() {
-
-	Layer.draw(x,y);
-
+	Layer.draw(ofRandom(x-1,x+1),ofRandom(y-1,y+1));
 }

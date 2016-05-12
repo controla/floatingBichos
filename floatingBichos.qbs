@@ -12,12 +12,15 @@ Project{
         name: { return FileInfo.baseName(path) }
 
         files: [
+            'src/BLayer.cpp',
+            'src/BLayer.h',
             'src/main.cpp',
             'src/ofApp.cpp',
             'src/ofApp.h',
         ]
 
         of.addons: [
+            'ofxGui',
         ]
 
         // additional flags for the project. the of module sets some

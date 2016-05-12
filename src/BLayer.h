@@ -5,17 +5,14 @@
 
 class BLayer {
 
-public: 
+public:
 
 	void setup(string _path);
-	void update(float _x, float _y);
+	void update();
 	void draw();
 
 	float x;
 	float y;
-
-	float speedX;
-	float speedY;
 
 	int layersTotal;
 
