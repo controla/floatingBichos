@@ -15,5 +15,7 @@ void BLayer::update() {
 }
 
 void BLayer::draw() {
-	Layer.draw(ofRandom(x-1,x+1),ofRandom(y-1,y+1));
+	ofSetColor(255);
+	float padding = 25;
+	Layer.draw(padding + ofRandom(x-1,x+1), padding + ofRandom(y-1,y+1));
 }

@@ -12,9 +12,9 @@ void ofApp::setup(){
 
   gui.setup();
   gui.add(positionX.set("posX", 100.0, -500.0, 500.0));
-  gui.add(positionY.set("posY", 100.0, -500.0, 500.0));
-  gui.add(bichoOffset.set("offset", 0.0, -200.0, 200.0));
-  gui.add(bichoSpeed.set("speed", 0.0, -1.0, 1.0));
+  gui.add(positionY.set("posY", 200.0, -500.0, 500.0));
+  gui.add(bOffset.set("offset", 50.0, -200.0, 200.0));
+  gui.add(bSpeed.set("speed", 0.1, -1.0, 1.0));
 
   // dir object with the layers that make up the full image
   ofDirectory dir(layerPath);
@@ -38,34 +38,33 @@ void ofApp::update(){
 	areaX[0] = (ofGetWidth() / 2) - (ofGetHeight() / 2);
 	areaX[1] = (ofGetWidth() / 2) + (ofGetHeight() / 2);
 
-	ofBackground(0);
-
   // update all layers
 	for(int i = 0; i < layersTotal; i++) {
 		myLayer[i].update();
 	}
 
-  bichoOffset = bichoOffset;
-  bichoSpeed = bichoSpeed;
+  bOffset = bOffset;
+  bSpeed = bSpeed;
 
   // move the bicho
-  float time = ofGetElapsedTimef();
+  //sin(ofGetElapsedTimef() * bSpeed + positionX);
 
-  positionX += _offset * ofNoise(time + _speed);
-  positionY += _offset * ofNoise(time + _speed);
+  bX = sin(ofGetElapsedTimef() + bSpeed + positionX) * bOffset;
+  bY = sin(ofGetElapsedTimef() + bSpeed + positionY) * bOffset;
+  //bY = 0;
 
-  bX = positionX;
-  bY = positionY;
+  //ofMap(sin(time), -1, 1, 0, ofGetWidth())
 
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
 
-	ofSetColor(255);
+  ofBackground(0);
 
+  ofFill();
 	// draw the debugging X
-  if(debX) {
+  if(debug) {
 	   ofDrawLine(areaX[0], 0, areaX[1], ofGetHeight());
      ofDrawLine(areaX[0], ofGetHeight(), areaX[1], 0);
   }
@@ -75,8 +74,11 @@ void ofApp::draw(){
 
     ofClear(0);
 
-    ofSetColor(255,0,0);
-    ofDrawRectangle(0,0,fbo.getWidth(),fbo.getHeight());
+    if(debug) {
+      ofSetColor(100);
+      ofNoFill();
+      ofDrawRectangle(1,1,fbo.getWidth()-1,fbo.getHeight()-1);
+    }
 
     ofSetColor(255);
 
@@ -110,17 +112,18 @@ void ofApp::draw(){
     fbo.draw(bX,bY);
   ofPopMatrix();
 
-  if(debGui) {
+  if(debug) {
     gui.draw();
+    ofDrawBitmapString("x: " + ofToString(bX), 30, ofGetHeight() - 60);
+    ofDrawBitmapString("y: " + ofToString(bY), 30, ofGetHeight() - 30);
   }
-  ofDrawBitmapString("x: " + ofToString(myLayer[0].x), 30, ofGetHeight() - 60);
-  ofDrawBitmapString("y: " + ofToString(myLayer[0].y), 30, ofGetHeight() - 30);
+
 
 }
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
-  if (key == 'x') { debX = !debX;}
+//  if (key == 'x') { debug = !debug;}
 }
 
 //--------------------------------------------------------------
@@ -141,8 +144,7 @@ void ofApp::mouseDragged(int x, int y, int button){
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
   if(button == 2) {
-    debX = !debX;
-    debGui = !debGui;
+    debug = !debug;
   }
 }
 

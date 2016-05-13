@@ -37,8 +37,7 @@ class ofApp : public ofBaseApp{
 	float bX;
 	float bY;
 
-	bool debX;
-	bool debGui;
+	bool debug;
 
 	ofxPanel gui;
   ofParameter<float> positionX;
