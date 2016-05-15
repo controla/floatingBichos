@@ -16,7 +16,8 @@ class Bicho {
 	float bichoX;
 	float bichoY;
 
-	bool isFading;
+	bool isFadingOut;
+	bool isFadingIn;
 	bool isAlive;
 	int layersTotal;
 	int bichoOpacity;

@@ -22,7 +22,6 @@ void Bicho::setup(string _bichoPath) {
   }
 
   isAlive = true;
-
   bichoOpacity = 255;
 
 }
@@ -37,8 +36,12 @@ void Bicho::update(float _speed, float _posx, float _posy, float _offset) {
     myLayer[i].update();
   }
 
-  if(isFading && isAlive) {
+  if(isFadingOut && isAlive) {
     bichoOpacity -= 1;
+  }
+
+  if(isFadingIn && isAlive) {
+    bichoOpacity += 1;
   }
 
 }
@@ -55,5 +58,5 @@ void Bicho::draw() {
 }
 
 void Bicho::remove () {
-  isFading = true;
+  isFadingOut = true;
 }

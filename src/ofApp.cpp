@@ -52,28 +52,37 @@ void ofApp::setup(){
 //--------------------------------------------------------------
 void ofApp::update(){
 
-	myBicho[bichoActive].update(bSpeed,positionX,positionY,bOffset);
-
-  // update all bichos
-	for(int i = 0; i < bichosTotal; i++) {
-		myBicho[i].update(bSpeed,positionX,positionY,bOffset);
-	}
-
-  if(myBicho[bichoActive].bichoOpacity <= 0) {
+  if(myBicho[bichoActive].bichoOpacity <= 0 && myBicho[bichoActive].isFadingOut) {
     myBicho[bichoActive].isAlive = false;
+  }
+
+  if(myBicho[bichoActive].isFadingIn) {
+  }
+
+  if(myBicho[bichoActive].bichoOpacity >= 255 && myBicho[bichoActive].isFadingIn) {
+    myBicho[bichoActive].isFadingIn = false;
   }
 
   // bicho is dead
   if(!myBicho[bichoActive].isAlive) {
     // clean up
-    myBicho[bichoActive].isFading = false;
+    myBicho[bichoActive].isFadingOut = false;
 
     // call the next guy
     bichoActive = bichoNext;
+    myBicho[bichoActive].bichoOpacity = 0;
+    myBicho[bichoActive].isFadingIn = true;
     myBicho[bichoActive].isAlive = true;
-    myBicho[bichoActive].bichoOpacity = 255;
-
   }
+
+	myBicho[bichoActive].update(bSpeed,positionX,positionY,bOffset);
+  // update all bichos
+	/*
+  for(int i = 0; i < bichosTotal; i++) {
+		myBicho[i].update(bSpeed,positionX,positionY,bOffset);
+	}
+  */
+
 }
 
 //--------------------------------------------------------------
@@ -135,7 +144,10 @@ void ofApp::draw(){
 
   if(debug) {
     gui.draw();
-    ofDrawBitmapString("bicho: " + ofToString(bichoActive), 30, ofGetHeight() - 90);
+
+
+    ofDrawBitmapString("bicho: " + ofToString(bichoActive), 30, ofGetHeight() - 120);
+    ofDrawBitmapString("opacity: " + ofToString(myBicho[bichoActive].bichoOpacity), 30, ofGetHeight() - 90);
     ofDrawBitmapString("x: " + ofToString(myBicho[bichoActive].bichoX), 30, ofGetHeight() - 60);
     ofDrawBitmapString("y: " + ofToString(myBicho[bichoActive].bichoY), 30, ofGetHeight() - 30);
   }
@@ -144,6 +156,8 @@ void ofApp::draw(){
 
 void ofApp::summon(int _bichoNew) {
   myBicho[bichoActive].remove();
+
+  ofLog(OF_LOG_NOTICE, "removing: " + ofToString(bichoActive));
   bichoNext = _bichoNew;
 }
 
