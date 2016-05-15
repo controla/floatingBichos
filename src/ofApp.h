@@ -1,16 +1,17 @@
 #pragma once
 
-#include "BLayer.h"
+#include "Bicho.h"
 #include "ofMain.h"
 #include "ofxGui.h"
 
-#define MAXLAYERS 20
+#define MAXBICHOS 20
 
 class ofApp : public ofBaseApp{
 	public:
 		void setup();
 		void update();
 		void draw();
+		void summon(int _bichoNew);
 
 		void keyPressed(int key);
 		void keyReleased(int key);
@@ -24,18 +25,23 @@ class ofApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
 
+
+	string bichosBasePath = "bichos";
 	// this should come from ofDirectory
-	string layerPath = "bichos/b0";
+	string bichoPath[MAXBICHOS];
+
+	// string layerPath = "bichos/b0";
+	//string layerPath[MAXLAYERS];
 
 	ofFbo fbo;
 
-	int layersTotal;
+	int bichosTotal;
+	int bichoActive;
+	int bichoNext;
+
 	float areaX[2];
 
 	int safezone = 250;
-
-	float bX;
-	float bY;
 
 	bool debug;
 
@@ -45,6 +51,6 @@ class ofApp : public ofBaseApp{
 	ofParameter<float> bOffset;
 	ofParameter<float> bSpeed;
 
-	BLayer myLayer[MAXLAYERS];
+	Bicho myBicho[MAXBICHOS];
 
 };

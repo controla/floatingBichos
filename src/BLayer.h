@@ -4,12 +4,10 @@
 #include "ofMain.h"
 
 class BLayer {
-
-public:
-
-	void setup(string _path);
-	void update();
-	void draw();
+	public:
+		void setup(string _path);
+		void update();
+		void draw();
 
 	float x;
 	float y;
