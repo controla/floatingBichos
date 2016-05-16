@@ -28,20 +28,31 @@ void Bicho::setup(string _bichoPath) {
 
 void Bicho::update(float _speed, float _posx, float _posy, float _offset) {
 
-  // move the whole bicho
-  bichoX = sin(ofGetElapsedTimef() + _speed + _posx) * _offset;
-  bichoY = sin(ofGetElapsedTimef() + _speed + _posy) * _offset;
+  if(isFadingIn && isAlive) {
+    bichoOpacity += 1;
+  }
 
-  for(int i = 0; i < layersTotal; i++) {
-    myLayer[i].update();
+  if(isFadingIn && bichoOpacity >= 255) {
+    bichoOpacity = 255;
+    isFadingIn = false;
   }
 
   if(isFadingOut && isAlive) {
     bichoOpacity -= 1;
   }
 
-  if(isFadingIn && isAlive) {
-    bichoOpacity += 1;
+  if(isFadingOut && bichoOpacity < 1) {
+    bichoOpacity = 0;
+    isFadingOut = false;
+    isAlive = false;
+  }
+
+  // move the whole bicho
+  bichoX = ofMap(ofNoise(ofGetElapsedTimef() * _speed + _posx),0,1,-10,10) * _offset;
+  bichoY = ofMap(ofNoise(ofGetElapsedTimef() * _speed + _posy),0,1,-10,10) * _offset;
+
+  for(int i = 0; i < layersTotal; i++) {
+    myLayer[i].update();
   }
 
 }
@@ -58,5 +69,9 @@ void Bicho::draw() {
 }
 
 void Bicho::remove () {
+  if(isFadingIn) {
+    isFadingIn = !isFadingIn;
+  }
+
   isFadingOut = true;
 }

@@ -18,10 +18,10 @@ void ofApp::setup(){
 
   // parameters gui
   gui.setup();
-  gui.add(positionX.set("posX", 100.0, -500.0, 500.0));
-  gui.add(positionY.set("posY", 200.0, -500.0, 500.0));
-  gui.add(bOffset.set("offset", 50.0, -200.0, 200.0));
-  gui.add(bSpeed.set("speed", 0.1, -1.0, 1.0));
+  gui.add(positionX.set("posX", 3.0, 0.0, 10.0));
+  gui.add(positionY.set("posY", 3.0, 0.0, 10.0));
+  gui.add(bOffset.set("offset", 10.0, 0, 50.0));
+  gui.add(bSpeed.set("speed", .5, 0, 1.0));
 
   // create an fbo for display of bicho
   fbo.allocate(ofGetHeight()/3,ofGetHeight()/3);
@@ -65,18 +65,17 @@ void ofApp::update(){
 
   // bicho is dead
   if(!myBicho[bichoActive].isAlive) {
-    // clean up
-    myBicho[bichoActive].isFadingOut = false;
-
-    // call the next guy
+    // activate new bicho
     bichoActive = bichoNext;
     myBicho[bichoActive].bichoOpacity = 0;
     myBicho[bichoActive].isFadingIn = true;
     myBicho[bichoActive].isAlive = true;
   }
 
+
+  // update active bicho
 	myBicho[bichoActive].update(bSpeed,positionX,positionY,bOffset);
-  // update all bichos
+
 	/*
   for(int i = 0; i < bichosTotal; i++) {
 		myBicho[i].update(bSpeed,positionX,positionY,bOffset);
@@ -155,14 +154,21 @@ void ofApp::draw(){
 }
 
 void ofApp::summon(int _bichoNew) {
-  myBicho[bichoActive].remove();
-
   ofLog(OF_LOG_NOTICE, "removing: " + ofToString(bichoActive));
+  myBicho[bichoActive].remove();
+  ofLog(OF_LOG_NOTICE, "calling: " + ofToString(_bichoNew));
   bichoNext = _bichoNew;
 }
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
+  if (key == '<') {
+    if (bichoActive > 0) { summon(bichoActive -1);}
+  }
+  if (key == '>') {
+    if (bichoActive < bichosTotal) { summon(bichoActive +1);}
+  }
+
   if (key == '0') { summon(0);}
   if (key == '1') { summon(1);}
   if (key == '2') { summon(2);}

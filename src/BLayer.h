@@ -13,6 +13,16 @@ class BLayer {
 	float y;
 
 	int layersTotal;
+	int layerOpacity;
+
+	bool layerHasOpacity;
+	bool layerHasScale;
+	bool layerHasRotate;
+
+	float layerScale;
+	float layerAngle;
+	float layerX;
+	float layerY;
 
 	ofImage Layer;
 
