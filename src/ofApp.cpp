@@ -22,7 +22,7 @@ void ofApp::setup(){
   gui.add(positionY.set("posY", .3, 0.0, 1.0));
   gui.add(bOffset.set("offset", 8.0, 0, 50.0));
   gui.add(bSpeed.set("speed", .2, 0, 1.0));
-  gui.add(safezone.set("safezone", 300, 100, 400);
+  gui.add(safezone.set("safezone", 300, 100, 400));
 
   // create an fbo for display of bicho
   fbo.allocate(ofGetHeight()/3,ofGetHeight()/3);
