@@ -6,7 +6,7 @@
 class BLayer {
 	public:
 		void setup(string _path);
-		void update();
+		void update(float _speed);
 		void draw();
 
 	float x;
@@ -15,12 +15,19 @@ class BLayer {
 	int layersTotal;
 	int layerOpacity;
 
+
 	bool layerHasOpacity;
 	bool layerHasScale;
 	bool layerHasRotate;
 
 	float layerScale;
+	float layerScaleMin;
+	float layerScaleMax;
+
 	float layerAngle;
+	int layerAngleMin;
+	int layerAngleMax;
+
 	float layerX;
 	float layerY;
 

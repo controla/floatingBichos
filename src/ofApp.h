@@ -41,8 +41,6 @@ class ofApp : public ofBaseApp{
 
 	float areaX[2];
 
-	int safezone = 250;
-
 	bool debug;
 
 	ofxPanel gui;
@@ -50,6 +48,7 @@ class ofApp : public ofBaseApp{
   ofParameter<float> positionY;
 	ofParameter<float> bOffset;
 	ofParameter<float> bSpeed;
+	ofParameter<int> safezone;
 
 	Bicho myBicho[MAXBICHOS];
 

@@ -1,2 +1,5 @@
+Makefile
+config.make
 bin
 obj
+src/main.cpp

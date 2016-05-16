@@ -11,50 +11,55 @@ void BLayer::setup(string _path) {
 
 	layerOpacity = 255;
 
+
+	// get settings for layer
 	layerHasOpacity = true;
 	layerHasScale = true;
 	layerHasRotate = true;
 
+	layerScaleMin = -1 * ofGetHeight()/4;
+	layerScaleMax = ofGetHeight()/4;
+
+	layerAngleMin = -10;
+	layerAngleMax = 10;
+
 }
 
-void BLayer::update() {
+void BLayer::update(float _speed) {
 
 	// apply transformations
 
 	if(layerHasOpacity) {
-	// layerOpacity = ofMap(sin(ofGetElapsedTimef()),-1,1,0,255);
+		// layerOpacity = ofMap(sin(ofGetElapsedTimef()),-1,1,0,255);
 	}
 
 	if(layerHasScale) {
-		layerScale = ofMap(sin(ofGetElapsedTimef()),-1,1,1,2);
+		layerScale = ofMap(ofNoise(ofGetElapsedTimef() * _speed),-1,1,.5,1.5);
 	}
 
 	if(layerHasRotate) {
-		layerAngle = ofMap(ofNoise(ofGetElapsedTimef()),-1,1,-30,30);
+		layerAngle = ofMap(ofNoise(ofGetElapsedTimef() * _speed),-1,1,layerAngleMin,layerAngleMax);
 	}
 
-	layerX = ofGetHeight() / 3 / 2;
-	layerY = ofGetHeight() / 3 / 2;
+	layerX = ofGetHeight() / 6;
+	layerY = ofGetHeight() / 6;
 
 }
 
 void BLayer::draw() {
 
-	// calculate padding to center the image on the fbo -> should use setAnchorPoint on Layer image
-	// float padding = (ofGetHeight()/3 - ofGetHeight()/4) / 2;
-
 	// ofSetColor(layerOpacity);
 
 	ofPushMatrix();
-		ofTranslate(layerX,layerY,0);
+
+		ofTranslate(layerX,layerY,0);		// origin on the layer center
 		ofRotate(layerAngle);
-		// ofScale(layerScale,layerScale,layerScale);
+		ofScale(layerScale,layerScale,1);
 
+		// center within the fbo size
 		Layer.setAnchorPoint(Layer.getWidth()/2, Layer.getHeight()/2);
-		// Layer.draw(padding + layerX, padding + layerY);
 
-		Layer.draw(ofRandom(-2,2), ofRandom(-1,1));
-		//Layer.draw(padding + ofRandom(x-1,x+1), padding + ofRandom(y-1,y+1));
+		Layer.draw(ofRandom(-1,1), ofRandom(-1,1));	// draw layer at origin (center)
 
 	ofPopMatrix();
 

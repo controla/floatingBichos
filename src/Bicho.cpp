@@ -52,7 +52,7 @@ void Bicho::update(float _speed, float _posx, float _posy, float _offset) {
   bichoY = ofMap(ofNoise(ofGetElapsedTimef() * _speed + _posy),0,1,-10,10) * _offset;
 
   for(int i = 0; i < layersTotal; i++) {
-    myLayer[i].update();
+    myLayer[i].update(_speed);
   }
 
 }

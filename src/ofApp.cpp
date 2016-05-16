@@ -18,10 +18,11 @@ void ofApp::setup(){
 
   // parameters gui
   gui.setup();
-  gui.add(positionX.set("posX", 3.0, 0.0, 10.0));
-  gui.add(positionY.set("posY", 3.0, 0.0, 10.0));
-  gui.add(bOffset.set("offset", 10.0, 0, 50.0));
-  gui.add(bSpeed.set("speed", .5, 0, 1.0));
+  gui.add(positionX.set("posX", .2, 0.0, 1.0));
+  gui.add(positionY.set("posY", .3, 0.0, 1.0));
+  gui.add(bOffset.set("offset", 8.0, 0, 50.0));
+  gui.add(bSpeed.set("speed", .2, 0, 1.0));
+  gui.add(safezone.set("safezone", 300, 100, 400);
 
   // create an fbo for display of bicho
   fbo.allocate(ofGetHeight()/3,ofGetHeight()/3);
@@ -143,8 +144,6 @@ void ofApp::draw(){
 
   if(debug) {
     gui.draw();
-
-
     ofDrawBitmapString("bicho: " + ofToString(bichoActive), 30, ofGetHeight() - 120);
     ofDrawBitmapString("opacity: " + ofToString(myBicho[bichoActive].bichoOpacity), 30, ofGetHeight() - 90);
     ofDrawBitmapString("x: " + ofToString(myBicho[bichoActive].bichoX), 30, ofGetHeight() - 60);
