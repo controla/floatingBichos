@@ -1,7 +1,11 @@
 <group>
-	<posX>0.21</posX>
-	<posY>0.27</posY>
-	<offset>13.25</offset>
-	<speed>0.185</speed>
+	<posX>0.5</posX>
+	<posY>1</posY>
+	<offset>9.75</offset>
+	<speed>0.255</speed>
 <group/>
+<helper>0</helper>
+	<safezone>233</safezone>
+	<scaleMin>0.3475</scaleMin>
+	<scaleMax>1</scaleMax>
 </group>

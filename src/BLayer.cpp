@@ -57,7 +57,8 @@ void BLayer::draw() {
 		ofScale(layerScale,layerScale,1);
 
 		// center within the fbo size
-		Layer.setAnchorPoint(Layer.getWidth()/2, Layer.getHeight()/2);
+		//Layer.setAnchorPoint(Layer.getWidth()/2, Layer.getHeight()/2);
+		Layer.setAnchorPercent(.5, .5);
 		Layer.draw(ofRandom(-1,1), ofRandom(-1,1));	// draw layer at origin (center)
 
 	ofPopMatrix();

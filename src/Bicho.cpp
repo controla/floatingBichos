@@ -68,10 +68,10 @@ void Bicho::draw() {
   // all layers
   for(int i = 0; i < layersTotal; i++) {
     myLayer[i].draw();
-    ofRectangle(0,0,myLayer[i].Layer.getWidth(),myLayer[i].Layer.getHeight());
   }
 
-
+  ofSetColor(255);
+  // ofRectangle(0,0,myLayer[i].Layer.getWidth(),myLayer[i].Layer.getHeight());
 
 }
 
