@@ -20,12 +20,13 @@ void BLayer::setup(string _path) {
 	layerScaleMin = -1 * ofGetHeight()/4;
 	layerScaleMax = ofGetHeight()/4;
 
-	layerAngleMin = -20;
-	layerAngleMax = 20;
+	layerAngleMin = -10;
+	layerAngleMax = 10;
 
+	layerSeed = ofRandom(100);
 }
 
-void BLayer::update(float _speed, float _scale) {
+void BLayer::update( float _speed, float _scale) {
 
 	// apply transformations
 
@@ -38,7 +39,7 @@ void BLayer::update(float _speed, float _scale) {
 	}
 
 	if(layerHasRotate) {
-		layerAngle = ofMap(ofNoise(ofGetElapsedTimef() * _speed),0,1,layerAngleMin,layerAngleMax);
+		layerAngle = ofMap( ofNoise(ofGetElapsedTimef() * _speed), 0, 1, layerAngleMin, layerAngleMax);
 	}
 
 	layerX = ofGetHeight() / 6;
@@ -52,14 +53,25 @@ void BLayer::draw() {
 
 	ofPushMatrix();
 
-		ofTranslate(layerX,layerY,0);		// origin on the layer center
-		ofRotate(layerAngle);
-		ofScale(layerScale,layerScale,1);
+		ofTranslate( layerX, layerY, 0);		// origin on the layer center
+		ofRotate( layerAngle);
+		ofScale( layerScale, layerScale, 1);
 
 		// center within the fbo size
 		//Layer.setAnchorPoint(Layer.getWidth()/2, Layer.getHeight()/2);
 		Layer.setAnchorPercent(.5, .5);
-		Layer.draw(ofRandom(-1,1), ofRandom(-1,1));	// draw layer at origin (center)
+
+
+		// found something here!
+		float lX = ofMap( ofNoise( (ofGetElapsedTimef() + layerSeed) * 0.1), 0, 1, -5, 5);
+		float lY = ofMap( ofNoise( (ofGetElapsedTimef() + layerSeed) * 0.1), 0, 1, -5, 5);
+
+
+		Layer.draw(lX, lY);
+
+
+		//Layer.draw(ofMap( ofNoise( ofGetElapsedTimef()), 0, 1, -10, 10),ofMap( ofNoise(ofGetElapsedTimef()), 0, 1, -10, 10));
+		//Layer.draw(ofRandom(-1,1), ofRandom(-1,1));	// draw layer at origin (center)
 
 	ofPopMatrix();
 

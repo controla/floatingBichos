@@ -71,7 +71,8 @@ void Bicho::draw() {
   }
 
   ofSetColor(255);
-  // ofRectangle(0,0,myLayer[i].Layer.getWidth(),myLayer[i].Layer.getHeight());
+  ofColor(255);
+  ofRectangle(0,0,myLayer[0].Layer.getWidth(),myLayer[0].Layer.getHeight());
 
 }
 

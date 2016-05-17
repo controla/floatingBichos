@@ -15,6 +15,7 @@ class BLayer {
 	int layersTotal;
 	int layerOpacity;
 
+	int layerSeed;
 
 	bool layerHasOpacity;
 	bool layerHasScale;

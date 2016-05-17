@@ -108,10 +108,8 @@ void ofApp::draw(){
   fbo.begin();
 
     ofClear(0);
-    // ofSetColor(255); // need this?
 
     ofPushMatrix();
-    //ofScale(-1, 1, 1);
   	myBicho[bichoActive].draw();
 
     if(debug) {
@@ -125,29 +123,33 @@ void ofApp::draw(){
 
   fbo.end();
 
+  fbo.setAnchorPercent(.5,.5);
+
   ofPushMatrix();
-    //ofTranslate(ofGetWidth() / 2 - fbo.getHeight() / 2, ofGetHeight() / 2 - fbo.getHeight() / 2 - safezone);
-    fbo.setAnchorPercent(.5,.5);
     ofTranslate(ofGetWidth() / 2, ofGetHeight() / 2 - safezone);
+    ofScale(-1,1,1);
     ofRotate(0);
     fbo.draw(myBicho[bichoActive].bichoX,myBicho[bichoActive].bichoY);
   ofPopMatrix();
 
   ofPushMatrix();
     ofTranslate(ofGetWidth() / 2 + safezone, ofGetHeight() / 2);
-    ofRotate(90);
+    ofScale(-1,1,1);
+    ofRotate(270);
     fbo.draw(myBicho[bichoActive].bichoX,myBicho[bichoActive].bichoY);
   ofPopMatrix();
 
   ofPushMatrix();
     ofTranslate(ofGetWidth() / 2, ofGetHeight() / 2 + safezone);
+    ofScale(-1,1,1);
     ofRotate(180);
     fbo.draw(myBicho[bichoActive].bichoX,myBicho[bichoActive].bichoY);
   ofPopMatrix();
 
   ofPushMatrix();
     ofTranslate(ofGetWidth() / 2 - safezone, ofGetHeight() / 2);
-    ofRotate(270);
+    ofScale(-1,1,1);
+    ofRotate(90);
     fbo.draw(myBicho[bichoActive].bichoX,myBicho[bichoActive].bichoY);
   ofPopMatrix();
 
