@@ -41,13 +41,19 @@ class ofApp : public ofBaseApp{
 
 	float areaX[2];
 
+
+
 	bool debug;
 
 	ofxPanel gui;
+	ofParameter<float> helper;
   ofParameter<float> positionX;
   ofParameter<float> positionY;
 	ofParameter<float> bOffset;
 	ofParameter<float> bSpeed;
+	ofParameter<float> scalemin;
+	ofParameter<float> scalemax;
+
 	ofParameter<int> safezone;
 
 	Bicho myBicho[MAXBICHOS];

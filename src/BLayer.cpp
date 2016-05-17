@@ -20,12 +20,12 @@ void BLayer::setup(string _path) {
 	layerScaleMin = -1 * ofGetHeight()/4;
 	layerScaleMax = ofGetHeight()/4;
 
-	layerAngleMin = -10;
-	layerAngleMax = 10;
+	layerAngleMin = -20;
+	layerAngleMax = 20;
 
 }
 
-void BLayer::update(float _speed) {
+void BLayer::update(float _speed, float _scale) {
 
 	// apply transformations
 
@@ -34,11 +34,11 @@ void BLayer::update(float _speed) {
 	}
 
 	if(layerHasScale) {
-		layerScale = ofMap(ofNoise(ofGetElapsedTimef() * _speed),-1,1,.5,1.5);
+		layerScale = _scale;
 	}
 
 	if(layerHasRotate) {
-		layerAngle = ofMap(ofNoise(ofGetElapsedTimef() * _speed),-1,1,layerAngleMin,layerAngleMax);
+		layerAngle = ofMap(ofNoise(ofGetElapsedTimef() * _speed),0,1,layerAngleMin,layerAngleMax);
 	}
 
 	layerX = ofGetHeight() / 6;
@@ -58,7 +58,6 @@ void BLayer::draw() {
 
 		// center within the fbo size
 		Layer.setAnchorPoint(Layer.getWidth()/2, Layer.getHeight()/2);
-
 		Layer.draw(ofRandom(-1,1), ofRandom(-1,1));	// draw layer at origin (center)
 
 	ofPopMatrix();

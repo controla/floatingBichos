@@ -6,7 +6,7 @@
 class BLayer {
 	public:
 		void setup(string _path);
-		void update(float _speed);
+		void update(float _speed, float _scale);
 		void draw();
 
 	float x;

@@ -18,11 +18,14 @@ void ofApp::setup(){
 
   // parameters gui
   gui.setup();
+  gui.add(helper.set("helper", 0.0, 0.0, 1.0));
   gui.add(positionX.set("posX", .2, 0.0, 1.0));
   gui.add(positionY.set("posY", .3, 0.0, 1.0));
   gui.add(bOffset.set("offset", 8.0, 0, 50.0));
   gui.add(bSpeed.set("speed", .2, 0, 1.0));
-  gui.add(safezone.set("safezone", 300, 100, 400));
+  gui.add(safezone.set("safezone", ofGetHeight()/3, 100, 400));
+  gui.add(scalemin.set("scaleMin", .5, .1, 1));
+  gui.add(scalemax.set("scaleMax", 1, 1, 2.0));
 
   // create an fbo for display of bicho
   fbo.allocate(ofGetHeight()/3,ofGetHeight()/3);
@@ -75,7 +78,7 @@ void ofApp::update(){
 
 
   // update active bicho
-	myBicho[bichoActive].update(bSpeed,positionX,positionY,bOffset);
+	myBicho[bichoActive].update(bSpeed,positionX,positionY,bOffset,scalemin, scalemax);
 
 	/*
   for(int i = 0; i < bichosTotal; i++) {
@@ -105,14 +108,17 @@ void ofApp::draw(){
   fbo.begin();
 
     ofClear(0);
-    ofSetColor(255); // need this?
+    // ofSetColor(255); // need this?
 
+    ofPushMatrix();
   	myBicho[bichoActive].draw();
+    ofPopMatrix();
 
-    // add a frame around the fbo to check boundries
+
     if(debug) {
       ofSetColor(100);
       ofNoFill();
+      // add a frame around the fbo to check boundries
       ofDrawRectangle(1,1,fbo.getWidth()-1,fbo.getHeight()-1);
     }
 
@@ -144,10 +150,10 @@ void ofApp::draw(){
 
   if(debug) {
     gui.draw();
-    ofDrawBitmapString("bicho: " + ofToString(bichoActive), 30, ofGetHeight() - 120);
-    ofDrawBitmapString("opacity: " + ofToString(myBicho[bichoActive].bichoOpacity), 30, ofGetHeight() - 90);
+    ofDrawBitmapString("bicho: " + ofToString(bichoActive), 30, ofGetHeight() - 100);
+    ofDrawBitmapString("opacity: " + ofToString(myBicho[bichoActive].bichoOpacity), 30, ofGetHeight() - 80);
     ofDrawBitmapString("x: " + ofToString(myBicho[bichoActive].bichoX), 30, ofGetHeight() - 60);
-    ofDrawBitmapString("y: " + ofToString(myBicho[bichoActive].bichoY), 30, ofGetHeight() - 30);
+    ofDrawBitmapString("y: " + ofToString(myBicho[bichoActive].bichoY), 30, ofGetHeight() - 40);
   }
 
 }

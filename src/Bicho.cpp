@@ -26,7 +26,7 @@ void Bicho::setup(string _bichoPath) {
 
 }
 
-void Bicho::update(float _speed, float _posx, float _posy, float _offset) {
+void Bicho::update(float _speed, float _posx, float _posy, float _offset, float _scalemin, float _scalemax) {
 
   if(isFadingIn && isAlive) {
     bichoOpacity += 1;
@@ -51,8 +51,12 @@ void Bicho::update(float _speed, float _posx, float _posy, float _offset) {
   bichoX = ofMap(ofNoise(ofGetElapsedTimef() * _speed + _posx),0,1,-10,10) * _offset;
   bichoY = ofMap(ofNoise(ofGetElapsedTimef() * _speed + _posy),0,1,-10,10) * _offset;
 
+  if(bichoHasScale) {
+		bichoScale = ofMap(ofNoise(ofGetElapsedTimef() * _speed),-1,1,_scalemin,_scalemax);
+	}
+
   for(int i = 0; i < layersTotal; i++) {
-    myLayer[i].update(_speed);
+    myLayer[i].update(_speed, bichoScale);
   }
 
 }
@@ -64,7 +68,10 @@ void Bicho::draw() {
   // all layers
   for(int i = 0; i < layersTotal; i++) {
     myLayer[i].draw();
+    ofRectangle(0,0,myLayer[i].Layer.getWidth(),myLayer[i].Layer.getHeight());
   }
+
+
 
 }
 
