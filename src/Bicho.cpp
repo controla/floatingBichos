@@ -29,7 +29,7 @@ void Bicho::setup(string _bichoPath) {
 void Bicho::update(float _speed, float _posx, float _posy, float _offset, float _scalemin, float _scalemax) {
 
   if(isFadingIn && isAlive) {
-    bichoOpacity += 1;
+    bichoOpacity += 5;
   }
 
   if(isFadingIn && bichoOpacity >= 255) {
@@ -38,7 +38,7 @@ void Bicho::update(float _speed, float _posx, float _posy, float _offset, float 
   }
 
   if(isFadingOut && isAlive) {
-    bichoOpacity -= 1;
+    bichoOpacity -= 5;
   }
 
   if(isFadingOut && bichoOpacity < 1) {
@@ -69,10 +69,6 @@ void Bicho::draw() {
   for(int i = 0; i < layersTotal; i++) {
     myLayer[i].draw();
   }
-
-  ofSetColor(255);
-  ofColor(255);
-  ofRectangle(0,0,myLayer[0].Layer.getWidth(),myLayer[0].Layer.getHeight());
 
 }
 

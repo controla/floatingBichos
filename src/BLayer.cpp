@@ -11,7 +11,6 @@ void BLayer::setup(string _path) {
 
 	layerOpacity = 255;
 
-
 	// get settings for layer
 	layerHasOpacity = true;
 	layerHasScale = true;
@@ -61,17 +60,14 @@ void BLayer::draw() {
 		//Layer.setAnchorPoint(Layer.getWidth()/2, Layer.getHeight()/2);
 		Layer.setAnchorPercent(.5, .5);
 
-
 		// found something here!
 		float lX = ofMap( ofNoise( (ofGetElapsedTimef() + layerSeed) * 0.1), 0, 1, -5, 5);
 		float lY = ofMap( ofNoise( (ofGetElapsedTimef() + layerSeed) * 0.1), 0, 1, -5, 5);
 
-
 		Layer.draw(lX, lY);
 
-
-		//Layer.draw(ofMap( ofNoise( ofGetElapsedTimef()), 0, 1, -10, 10),ofMap( ofNoise(ofGetElapsedTimef()), 0, 1, -10, 10));
-		//Layer.draw(ofRandom(-1,1), ofRandom(-1,1));	// draw layer at origin (center)
+		//ofNoFill();
+	  //ofDrawRectangle(0,0,Layer.getWidth(),Layer.getHeight());
 
 	ofPopMatrix();
 

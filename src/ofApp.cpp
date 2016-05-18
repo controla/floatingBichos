@@ -23,7 +23,7 @@ void ofApp::setup(){
   gui.add(positionY.set("posY", .3, 0.0, 1.0));
   gui.add(bOffset.set("offset", 8.0, 0, 50.0));
   gui.add(bSpeed.set("speed", .2, 0, 1.0));
-  gui.add(safezone.set("safezone", ofGetHeight()/3, 100, 400));
+  gui.add(safezone.set("safezone", ofGetHeight()/3, 100, 500));
   gui.add(scalemin.set("scaleMin", .5, .1, 1));
   gui.add(scalemax.set("scaleMax", 1, 1, 2.0));
 
@@ -49,7 +49,6 @@ void ofApp::setup(){
 
   // popit:
 	ofEnableAlphaBlending();
-  // ofSetRectMode(OF_RECTMODE_CENTER);
 
 }
 
@@ -79,12 +78,6 @@ void ofApp::update(){
 
   // update active bicho
 	myBicho[bichoActive].update(bSpeed,positionX,positionY,bOffset,scalemin, scalemax);
-
-	/*
-  for(int i = 0; i < bichosTotal; i++) {
-		myBicho[i].update(bSpeed,positionX,positionY,bOffset);
-	}
-  */
 
 }
 
@@ -183,6 +176,7 @@ void ofApp::keyPressed(int key){
   if (key == '1') { summon(1);}
   if (key == '2') { summon(2);}
   if (key == '3') { summon(3);}
+  if (key == '4') { summon(4);}
 }
 
 //--------------------------------------------------------------
@@ -202,6 +196,13 @@ void ofApp::mouseDragged(int x, int y, int button){
 
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
+  if(button == 0) {
+    summon(bichoActive + 1);
+    if(bichoActive >= bichosTotal - 1) {
+      summon(0);
+    }
+  }
+
   if(button == 2) {
     debug = !debug;
   }

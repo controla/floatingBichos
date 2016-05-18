@@ -41,8 +41,6 @@ class ofApp : public ofBaseApp{
 
 	float areaX[2];
 
-
-
 	bool debug;
 
 	ofxPanel gui;

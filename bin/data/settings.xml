@@ -1,8 +1,8 @@
 <group>
 	<posX>0.5</posX>
 	<posY>1</posY>
-	<offset>9.75</offset>
-	<speed>0.255</speed>
+	<offset>7</offset>
+	<speed>0.2</speed>
 <group/>
 <helper>0</helper>
 	<safezone>233</safezone>
