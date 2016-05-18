@@ -61,8 +61,11 @@ void BLayer::draw() {
 		Layer.setAnchorPercent(.5, .5);
 
 		// found something here!
-		float lX = ofMap( ofNoise( (ofGetElapsedTimef() + layerSeed) * 0.1), 0, 1, -5, 5);
-		float lY = ofMap( ofNoise( (ofGetElapsedTimef() + layerSeed) * 0.1), 0, 1, -5, 5);
+		float lX = ofMap( ofNoise( (ofGetElapsedTimef() + layerSeed) * 0.1), 0, 1, -7, 7);
+		float lY = ofMap( ofNoise( (ofGetElapsedTimef() + layerSeed) * 0.1), 0, 1, -7, 7);
+
+		// ofColor c =
+		// Layer.setColor()
 
 		Layer.draw(lX, lY);
 

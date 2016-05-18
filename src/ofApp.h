@@ -51,6 +51,7 @@ class ofApp : public ofBaseApp{
 	ofParameter<float> bSpeed;
 	ofParameter<float> scalemin;
 	ofParameter<float> scalemax;
+	ofParameter<float> layer;
 
 	ofParameter<int> safezone;
 

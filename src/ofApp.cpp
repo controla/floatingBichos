@@ -55,29 +55,29 @@ void ofApp::setup(){
 //--------------------------------------------------------------
 void ofApp::update(){
 
-  if(myBicho[bichoActive].bichoOpacity <= 0 && myBicho[bichoActive].isFadingOut) {
-    myBicho[bichoActive].isAlive = false;
-  }
-
-  if(myBicho[bichoActive].isFadingIn) {
-  }
-
-  if(myBicho[bichoActive].bichoOpacity >= 255 && myBicho[bichoActive].isFadingIn) {
-    myBicho[bichoActive].isFadingIn = false;
-  }
-
-  // bicho is dead
+  // bicho is dead, spawn a new one.
   if(!myBicho[bichoActive].isAlive) {
+
     // activate new bicho
     bichoActive = bichoNext;
+    // init values // should create a new seed here for posX posY.
+
+    myBicho[bichoActive].seedX = ofRandom(100) / 100;
+    ofLog(OF_LOG_NOTICE, "seedX: " + ofToString(myBicho[bichoActive].seedX));
+    myBicho[bichoActive].seedY = ofRandom(100) / 100;
+    ofLog(OF_LOG_NOTICE, "seedY: " + ofToString(myBicho[bichoActive].seedY));
+
     myBicho[bichoActive].bichoOpacity = 0;
     myBicho[bichoActive].isFadingIn = true;
     myBicho[bichoActive].isAlive = true;
+    myBicho[bichoActive].bichoSound.play();
+
   }
 
 
+
   // update active bicho
-	myBicho[bichoActive].update(bSpeed,positionX,positionY,bOffset,scalemin, scalemax);
+	myBicho[bichoActive].update(bSpeed,positionX,positionY,bOffset,scalemin,scalemax);
 
 }
 
@@ -116,6 +116,8 @@ void ofApp::draw(){
 
   fbo.end();
 
+
+  // we don't touch this anymore...
   fbo.setAnchorPercent(.5,.5);
 
   ofPushMatrix();
@@ -146,6 +148,8 @@ void ofApp::draw(){
     fbo.draw(myBicho[bichoActive].bichoX,myBicho[bichoActive].bichoY);
   ofPopMatrix();
 
+
+  // raw outputs
   if(debug) {
     gui.draw();
     ofDrawBitmapString("bicho: " + ofToString(bichoActive), 30, ofGetHeight() - 100);
@@ -156,6 +160,7 @@ void ofApp::draw(){
 
 }
 
+//--------------------------------------------------------------
 void ofApp::summon(int _bichoNew) {
   ofLog(OF_LOG_NOTICE, "removing: " + ofToString(bichoActive));
   myBicho[bichoActive].remove();
@@ -166,10 +171,10 @@ void ofApp::summon(int _bichoNew) {
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
   if (key == '<') {
-    if (bichoActive > 0) { summon(bichoActive -1);}
+    if (bichoActive > 0) { summon(bichoActive - 1);}
   }
   if (key == '>') {
-    if (bichoActive < bichosTotal) { summon(bichoActive +1);}
+    if (bichoActive < bichosTotal) { summon(bichoActive + 1);}
   }
 
   if (key == '0') { summon(0);}

@@ -25,7 +25,12 @@ class Bicho {
 
 	int layersTotal;
 	int bichoOpacity;
+	float bichoVolume;
 	int bichoNext;
+	float seedX;
+	float seedY;
+
+	ofSoundPlayer bichoSound;
 
 	BLayer myLayer[MAXLAYERS];
 
