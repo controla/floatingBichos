@@ -5,29 +5,24 @@
 
 class BLayer {
 	public:
-		void setup(string _path);
-		void update(float _speed, float _scale);
+		void setup(int layerId, string _layerpath, int lOpacity, int lScale, int lRotate, int lShy);
+		void update(float _speed, float _scale, int _bichoOpacity);
 		void draw();
 
 	float x;
 	float y;
 
-	int layersTotal;
-	int layerOpacity;
-
 	int layerSeed;
 
-	bool layerHasOpacity;
-	bool layerHasScale;
-	bool layerHasRotate;
+	int HasOpacity;
+	int HasScale;
+	int HasRotate;
+	int isShy;
 
+	int diff;
+	int layerOpacity;
 	float layerScale;
-	float layerScaleMin;
-	float layerScaleMax;
-
 	float layerAngle;
-	int layerAngleMin;
-	int layerAngleMax;
 
 	float layerX;
 	float layerY;

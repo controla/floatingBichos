@@ -17,7 +17,7 @@ void ofApp::setup(){
   ofSetWindowTitle("Floating Bichos v0.1-alpha");
 
   // parameters gui
-  gui.setup();
+  gui.setup("main","settings.xml",30,30);
   gui.add(helper.set("helper", 0.0, 0.0, 1.0));
   gui.add(positionX.set("posX", .2, 0.0, 1.0));
   gui.add(positionY.set("posY", .3, 0.0, 1.0));
@@ -41,14 +41,14 @@ void ofApp::setup(){
 
   // setup found bichos (load its layers)
   for(int thisBicho = 0; thisBicho < bichosTotal; thisBicho++) {
-    myBicho[thisBicho].setup(bichosDir.getPath(thisBicho));
+    myBicho[thisBicho].setup(thisBicho, bichosDir.getPath(thisBicho));
   }
 
   // init bicho 0
   bichoActive = 0;
 
   // popit:
-	ofEnableAlphaBlending();
+
 
 }
 
@@ -74,7 +74,12 @@ void ofApp::update(){
 
   }
 
-
+  if(!debug) {
+    if(ofGetElapsedTimef() - lastStop > 10) {
+      summon(ofRandom(bichosTotal));
+      lastStop = ofGetElapsedTimef() + ofRandom(10);
+    }
+  }
 
   // update active bicho
 	myBicho[bichoActive].update(bSpeed,positionX,positionY,bOffset,scalemin,scalemax);
@@ -85,6 +90,7 @@ void ofApp::update(){
 void ofApp::draw(){
 
   ofBackground(0);
+  ofEnableAlphaBlending();
 
   // ofFill();
 
@@ -115,7 +121,6 @@ void ofApp::draw(){
     ofPopMatrix();
 
   fbo.end();
-
 
   // we don't touch this anymore...
   fbo.setAnchorPercent(.5,.5);
@@ -148,11 +153,14 @@ void ofApp::draw(){
     fbo.draw(myBicho[bichoActive].bichoX,myBicho[bichoActive].bichoY);
   ofPopMatrix();
 
+  ofDisableAlphaBlending();
 
   // raw outputs
   if(debug) {
     gui.draw();
-    ofDrawBitmapString("bicho: " + ofToString(bichoActive), 30, ofGetHeight() - 100);
+
+    ofDrawBitmapString("bicho: " + ofToString(bichoActive), 30, ofGetHeight() - 120);
+    ofDrawBitmapString("total: " + ofToString(bichosTotal), 30, ofGetHeight() - 100);
     ofDrawBitmapString("opacity: " + ofToString(myBicho[bichoActive].bichoOpacity), 30, ofGetHeight() - 80);
     ofDrawBitmapString("x: " + ofToString(myBicho[bichoActive].bichoX), 30, ofGetHeight() - 60);
     ofDrawBitmapString("y: " + ofToString(myBicho[bichoActive].bichoY), 30, ofGetHeight() - 40);
@@ -215,30 +223,24 @@ void ofApp::mousePressed(int x, int y, int button){
 
 //--------------------------------------------------------------
 void ofApp::mouseReleased(int x, int y, int button){
-
 }
 
 //--------------------------------------------------------------
 void ofApp::mouseEntered(int x, int y){
-
 }
 
 //--------------------------------------------------------------
 void ofApp::mouseExited(int x, int y){
-
 }
 
 //--------------------------------------------------------------
 void ofApp::windowResized(int w, int h){
-
 }
 
 //--------------------------------------------------------------
 void ofApp::gotMessage(ofMessage msg){
-
 }
 
 //--------------------------------------------------------------
 void ofApp::dragEvent(ofDragInfo dragInfo){
-
 }

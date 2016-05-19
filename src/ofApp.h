@@ -1,8 +1,9 @@
 #pragma once
 
+
 #include "Bicho.h"
-#include "ofMain.h"
 #include "ofxGui.h"
+#include "ofMain.h"
 
 #define MAXBICHOS 20
 
@@ -25,10 +26,7 @@ class ofApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
 
-
 	string bichosBasePath = "bichos";
-	// this should come from ofDirectory
-	string bichoPath[MAXBICHOS];
 
 	// string layerPath = "bichos/b0";
 	//string layerPath[MAXLAYERS];
@@ -39,6 +37,8 @@ class ofApp : public ofBaseApp{
 	int bichoActive;
 	int bichoNext;
 
+	float lastStop;
+	
 	float areaX[2];
 
 	bool debug;

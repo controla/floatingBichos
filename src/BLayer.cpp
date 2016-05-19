@@ -4,68 +4,71 @@ BLayer::BLayer() {
 
 };
 
-void BLayer::setup(string _path) {
-	ofLog(OF_LOG_NOTICE, "loading layer: " + ofToString(_path));
-	Layer.load(_path);
+void BLayer::setup(int _layerId, string _layerpath, int lOpacity, int lScale, int lRotate, int lShy) {
+
+	ofLog(OF_LOG_NOTICE, "loading layer: " + ofToString(_layerpath));
+	Layer.load(_layerpath);
 	Layer.resize(ofGetHeight()/4,ofGetHeight()/4);
 
-	layerOpacity = 255;
-
-	// get settings for layer
-	layerHasOpacity = true;
-	layerHasScale = true;
-	layerHasRotate = true;
-
-	layerScaleMin = -1 * ofGetHeight()/4;
-	layerScaleMax = ofGetHeight()/4;
-
-	layerAngleMin = -10;
-	layerAngleMax = 10;
-
+	layerAngle = 50;
 	layerSeed = ofRandom(100);
+
+	HasOpacity = lOpacity;
+	HasScale = lScale;
+	HasRotate = lRotate;
+	isShy = lShy;
+
+	ofLog(OF_LOG_NOTICE, ofToString(HasOpacity) + " " + ofToString(HasScale) + " " + ofToString(HasRotate) + " " + ofToString(isShy));
+
+	if(isShy) {
+		diff = ofRandom(1000);
+	}
+
 }
 
-void BLayer::update( float _speed, float _scale) {
+void BLayer::update( float _speed, float _scale, int _bichoOpacity) {
 
 	// apply transformations
 
-	if(layerHasOpacity) {
-		// layerOpacity = ofMap(sin(ofGetElapsedTimef()),-1,1,0,255);
+	if(HasOpacity) {
+		if(isShy) {
+			layerOpacity = ofMap(ofNoise(ofGetElapsedTimef() + diff),0,1,100,255);
+		} else {
+			layerOpacity = ofMap(ofNoise(ofGetElapsedTimef() + diff),0,1,0,255);
+		}
+	} else {
+		layerOpacity = _bichoOpacity;
 	}
 
-	if(layerHasScale) {
-		layerScale = _scale;
+	if(HasScale) {
+		layerScale = _scale; // duh
 	}
 
-	if(layerHasRotate) {
-		layerAngle = ofMap( ofNoise(ofGetElapsedTimef() * _speed), 0, 1, layerAngleMin, layerAngleMax);
+	if(HasRotate) {
+		layerAngle = ofMap(ofNoise(ofGetElapsedTimef() * _speed), 0, 1, -20, 20);
 	}
 
-	layerX = ofGetHeight() / 6;
+	layerX = ofGetHeight() / 6; // half the size of the fbo
 	layerY = ofGetHeight() / 6;
 
 }
 
 void BLayer::draw() {
 
-	// ofSetColor(layerOpacity);
+	ofSetColor(255,255,255,layerOpacity);
 
 	ofPushMatrix();
 
-		ofTranslate( layerX, layerY, 0);		// origin on the layer center
-		ofRotate( layerAngle);
-		ofScale( layerScale, layerScale, 1);
-
-		// center within the fbo size
-		//Layer.setAnchorPoint(Layer.getWidth()/2, Layer.getHeight()/2);
+		// draw from center
 		Layer.setAnchorPercent(.5, .5);
 
-		// found something here!
-		float lX = ofMap( ofNoise( (ofGetElapsedTimef() + layerSeed) * 0.1), 0, 1, -7, 7);
-		float lY = ofMap( ofNoise( (ofGetElapsedTimef() + layerSeed) * 0.1), 0, 1, -7, 7);
+		ofTranslate(layerX, layerY, 0);		// origin on the layer center (center of fbo size)
+		ofRotate(layerAngle);
+		ofScale(layerScale, layerScale, 1);
 
-		// ofColor c =
-		// Layer.setColor()
+		// found something here!
+		float lX = ofMap(ofNoise( (ofGetElapsedTimef() + layerSeed) * 0.1), 0, 1, -7, 7);
+		float lY = ofMap(ofNoise( (ofGetElapsedTimef() + layerSeed) * 0.1), 0, 1, -7, 7);
 
 		Layer.draw(lX, lY);
 
